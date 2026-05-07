@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://www.markforged.com",
     packages=setuptools.find_packages(),
+    package_data={"gomp": ["completions/_gomp"]},
     entry_points={"console_scripts": ["gomp=gomp.gomp:process_commands"]},
     classifiers=[
         "Programming Language :: Python :: 3",

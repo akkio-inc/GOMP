@@ -1,0 +1,24 @@
+#compdef gomp
+
+# zsh completion for gomp (Git cOMPare).
+# Completes local + remote git branch names for the src/dest positional args.
+#
+# Install: place this file in a directory on $fpath before `compinit` runs.
+# See README.md for setup instructions.
+
+_gomp_branches() {
+  local -a branches
+  branches=(${(f)"$(git for-each-ref --format='%(refname:short)' refs/heads refs/remotes 2>/dev/null)"})
+  _describe -t branches 'branch' branches
+}
+
+_gomp() {
+  _arguments -C \
+    '--key[Display with color code]' \
+    '--recut[Recut view (interactive-rebase ready)]' \
+    '--cols[Number of columns]:columns:' \
+    '1:source branch:_gomp_branches' \
+    '2:destination branch:_gomp_branches'
+}
+
+_gomp "$@"

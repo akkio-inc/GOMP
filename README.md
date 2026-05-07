@@ -22,6 +22,32 @@ $ alias gomp="python /path/to/gomp/gomp.py"
 
 Gomp has been tested on MacOS only but should be compatible with most flavors of Linux.
 
+### Optional: zsh tab completion
+
+If you use zsh with git tab completion enabled (`autoload -Uz compinit && compinit`), you can complete branch names for the `src` and `dest` arguments by installing the bundled `_gomp` completion file.
+
+Add a completions directory to your `$fpath` *before* `compinit` runs in `~/.zshrc`:
+
+```zsh
+fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit && compinit
+```
+
+Then symlink the completion file shipped with the package:
+
+```bash
+$ mkdir -p ~/.zsh/completions
+$ ln -s <GOMP_REPO_ROOT>/gomp/completions/_gomp" ~/.zsh/completions/_gomp
+```
+
+You MUST run gomp as a program, not an alias. Put this in `~/.zshrc`:
+
+```zsh
+gomp() { python <GOMP_REPO_ROOT>/gomp/gomp.py "$@" }
+```
+
+Restart your shell (or `rm -f ~/.zcompdump && compinit`) and `gomp <TAB>` will complete git branch names.
+
 ## Using GOMP
 
 With gomp installed, navigate to any directory that has a git repository with multiple branches. Our hypothetical repository has two branches: `feature` and `main`. Run:
